@@ -28,15 +28,13 @@ $(document).ready(function () {
     // functions
     // pick 1 character, move other 3 down a div under enemies div
     function chooseHero() {
-        if (characterChosen == false && round == 0) {
-            $(".box-1").replaceWith($(this));
 
-            // move all divs to the right
 
-            // div box for "choose your battle" in box-2
+        // move all divs to the right
 
-            // move remaining divs to right
-        }
+        // div box for "choose your battle" in box-2
+
+        // move
         characterChosen = true;
     }
 
@@ -66,8 +64,9 @@ $(document).ready(function () {
 
     // on click functions
     $(".character").on("click", function () {
-        chooseHero();
-
+        if (characterChosen == false && round == 0) {
+            $(".box-1").replaceWith($(this));
+        }
     })
 
 
