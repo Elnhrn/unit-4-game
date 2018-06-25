@@ -1,0 +1,53 @@
+.container {
+    max-width: none !important;
+    width: 970px;
+}
+
+body {
+    background-image: url("../images/swBackground.jpg");
+    background-repeat: no-repeat;
+    background-size: 1440px;
+    background-color: black;
+    background-position: center top;
+    font-size: 25px;
+    text-align: center;
+    font-weight: bolder;
+    position: relative;
+}
+
+img {
+    width: 190px;
+    display: block;
+    margin: 0 -10px;
+}
+
+.col-md-2 {
+    margin: 27% auto 0;
+    position: relative;
+    padding: 0;
+}
+
+.choose-character {
+    border: white solid 1px;
+    background-color: black;
+    color: white;
+    padding: 60px 30px;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.hp {
+    color: white;
+    background-color: black;
+    border: white solid 1px;
+    display: inline-block;
+    padding: 0 10px;
+    font-size: 16px;
+}
+
+img:hover {
+    cursor: pointer;
+}
