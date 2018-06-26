@@ -16,7 +16,7 @@ footer {
 /* ---------------------- */
 
 .container {
-    max-width: none !important;
+    max-width: 1024px;
     width: 970px;
 }
 
@@ -33,6 +33,10 @@ body {
     color: white;
 }
 
+h4 {
+    color: white;
+}
+
 img {
     width: 190px;
     display: block;
@@ -40,7 +44,7 @@ img {
 }
 
 .col-md-2 {
-    margin: 23% auto 0;
+    margin: 20% auto 0;
     position: relative;
     padding: 0;
 }
