@@ -23,6 +23,7 @@ $(document).ready(function () {
     };
     var characterChosen = false;
     var round = 0;
+    var enemyChosen = false;
 
     // functions
 
@@ -54,10 +55,10 @@ $(document).ready(function () {
 
         // TO DO: turn this into a function        
         // pick 1 character
-        if (characterChosen == false && round == 0) {
+        if (characterChosen == false && enemyChosen == false && round == 0) {
             $(".choose-character").replaceWith($(this));
             $(this).children().last().css("background-color", "green");
-            characterChosen = true;
+
 
             // move all divs to the right
             if ($(this).attr("id") == "yoda") {
@@ -73,17 +74,27 @@ $(document).ready(function () {
 
             // div box for "choose your battle" in box-2
             $(".box-2:last").addClass("choose-battle").text("Choose your battle");
-        }
-    })
-
-    // pick villain
-    $(".choose-battle").on("click", function () {
-        if (characterChosen == true && round == 0) {
-            $(this)
+            characterChosen = true;
+            return;
         }
 
+        // pick villain
+        if (characterChosen == true && enemyChosen == false && round == 0) {
+            $(".choose-battle").replaceWith($(this));
+            $(this).children().last().css("background", "red");
 
+            if ($(".box-5").children().length == 0) {
+                $(".box-4").children().appendTo($(".box-5"));
+                $(".box-3").children().appendTo($(".box-4"));
+            } else if ($(".box-4").children().length == 0) {
+                $(".box-3").children().appendTo($(".box-4"));
+            }
+        }
+
+        enemyChosen = true;
     })
+
+
 
 
 
