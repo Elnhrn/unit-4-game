@@ -23,7 +23,7 @@ footer {
 body {
     background-image: url("../images/swBackground.jpg");
     background-repeat: no-repeat;
-    background-size: 1350px;
+    background-size: 1150px;
     background-color: black;
     background-position: center top;
     font-size: 20px;
@@ -44,7 +44,7 @@ img {
 }
 
 .col-md-2 {
-    margin: 17% auto 0;
+    margin: 15.5% auto 0;
     position: relative;
     padding: 0;
 }
