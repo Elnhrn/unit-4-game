@@ -97,7 +97,7 @@ $(document).ready(function () {
         user = $(".box-1").attr("id");
         enemy = $(".box-2").attr("id");
 
-        // if id matches, text append var names
+        // if id matches, attack enemy, deduct hp from enemy and user
         for (var i = 0; i < characters.length; i++) {
             if (characters[i] == user) {
 
