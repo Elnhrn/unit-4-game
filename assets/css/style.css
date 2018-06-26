@@ -39,15 +39,27 @@ img {
     transform: translate(-50%, -50%);
 }
 
+.choose-battle {
+    border: white solid 1px;
+    background-color: black;
+    color: white;
+    padding: 60px 40px;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .hp {
     color: white;
     background-color: black;
     border: white solid 1px;
     display: inline-block;
-    padding: 0 10px;
-    font-size: 16px;
+    padding: 0 20px;
+    font-size: 20px;
 }
 
-img:hover {
+img:hover, .choose-battle:hover {
     cursor: pointer;
 }

@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-
     // declare 4 character vars and their hp
     var rey = {
         name: "Rey",
@@ -26,19 +25,6 @@ $(document).ready(function () {
     var round = 0;
 
     // functions
-    // pick 1 character, move other 3 down a div under enemies div
-    function chooseHero() {
-
-
-        // move all divs to the right
-
-        // div box for "choose your battle" in box-2
-
-        // move
-        characterChosen = true;
-    }
-
-    // click on 1 of the 3 enemies, move that down to defender div
 
     // fight by clicking on attack button
     // hp of enemy goes down, your hp goes down per click
@@ -55,19 +41,51 @@ $(document).ready(function () {
 
     }
 
-
     // when you reduce your defender's hp to negative, "You have defeated ENEMY, you can choose to fight another enemy."
     // when you click on attack after you kill one enemy, "No enemy here."
     // click on remaining enemies, move down to defender div
     // click attack, your attack damage remembers from last enemy and continues to increase by increments
     // "You won! GAME OVER!"
 
+
     // on click functions
+
     $(".character").on("click", function () {
+
+        // TO DO: turn this into a function        
+        // pick 1 character
         if (characterChosen == false && round == 0) {
-            $(".box-1").replaceWith($(this));
+            $(".choose-character").replaceWith($(this));
+            $(this).children().last().css("background-color", "green");
+            characterChosen = true;
+
+            // move all divs to the right
+            if ($(this).attr("id") == "yoda") {
+                $("#rey").appendTo($(".box-3"));
+            } else if ($(this).attr("id") == "kylo") {
+                $("#yoda").appendTo($(".box-4"));
+                $("#rey").appendTo($(".box-3"));
+            } else if ($(this).attr("id") == "vader") {
+                $("#kylo").appendTo($(".box-5"));
+                $("#yoda").appendTo($(".box-4"));
+                $("#rey").appendTo($(".box-3"));
+            }
+
+            // div box for "choose your battle" in box-2
+            $(".box-2:last").addClass("choose-battle").text("Choose your battle");
         }
     })
+
+    // pick villain
+    $(".choose-battle").on("click", function () {
+        if (characterChosen == true && round == 0) {
+            $(this)
+        }
+
+
+    })
+
+
 
 
 })
