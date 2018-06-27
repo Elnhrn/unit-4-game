@@ -5,12 +5,12 @@ $(document).ready(function () {
         "rey": {
             name: "Rey",
             hp: 130,
-            damage: 8,
+            damage: 8
         },
         "yoda": {
             name: "Yoda",
             hp: 160,
-            damage: 20,
+            damage: 20
         },
         "kylo": {
             name: "Kylo Ren",
@@ -24,14 +24,12 @@ $(document).ready(function () {
         }
     }
     var characterChosen = false;
-    var round = 0;
     var enemyChosen = false;
-    var user = "";
-    var enemy = "";
+    var user;
+    var enemy;
+    var turnCounter = 0;
+    var killCount = 0;
 
-    // functions
-
-    // hp of enemy goes down, your hp goes down per click
     // "You attacked ENEMY for # damage"
     // "ENEMY attacked you back # damage"
     // as you keep clicking your attack damage increments 
@@ -44,14 +42,13 @@ $(document).ready(function () {
     // click attack, your attack damage remembers from last enemy and continues to increase by increments
     // "You won! GAME OVER!"
 
-
     // on click functions
 
     $(".character").on("click", function () {
 
         // TO DO: turn this into a function?      
         // pick 1 character
-        if (characterChosen == false && enemyChosen == false && round == 0) {
+        if (characterChosen == false && enemyChosen == false && turnCounter == 0) {
             $(".choose-character").replaceWith($(this));
             $(this).children().last().css("background-color", "green");
 
@@ -68,14 +65,14 @@ $(document).ready(function () {
             }
 
             // div box for "choose your battle" in box-2
-            $(".box-2:last").addClass("choose-battle").text("Choose your battle");
-            $(".box-1").css("pointer-events","none");
+            $("<div class='choose-battle'>Choose your battle</div>").appendTo($(".box-2"));
+            $(".box-1").css("pointer-events", "none");
             characterChosen = true;
             return;
         }
 
         // pick villain
-        if (characterChosen == true && enemyChosen == false && round == 0) {
+        if (characterChosen == true && enemyChosen == false && turnCounter == 0) {
             $(".choose-battle").replaceWith($(this));
             $(this).children().last().css("background", "red");
 
@@ -88,30 +85,32 @@ $(document).ready(function () {
 
             $(".box-3").append("<img id='attack' src='assets/images/attack.png'>");
         }
-
         enemyChosen = true;
     })
 
     // fight by clicking on attack button
-    $("#attack").on("click", function () {
-        user = $(".box-1").attr("id");
-        enemy = $(".box-2").attr("id");
+    $(".box-3").on("click", "#attack", function () {
+        user = $(".box-1").children("div").eq(0).attr("id");
+        enemy = $(".box-2").children("div").eq(0).attr("id");
+        // access objects of obj array with [int]
+        var userObj = characters[user];
+        var enemyObj = characters[enemy];
 
-        // if id matches, attack enemy, deduct hp from enemy and user
-        for (var i = 0; i < characters.length; i++) {
-            if (characters[i] == user) {
-
-            }
-        }
-
-        if (enemy == "rey") {
-
-        } else if (enemy == "yoda") {
-
-        } else if (enemy == "kylo") {
-
-        } else if (enemy == "vader") {
+        if (userObj.hp > 0) {
+            enemyObj = enemyObj.hp - userObj.damage * turnCounter;
+            userObj = userObj.hp - enemyObj.damage;
+            $("footer").html("<div>You attacked " + userObj.name + " for " + enemyObj.hp + " damage!</div>");
+        } else {
 
         }
+
+        turnCounter++;
+
+        // attack enemy, deduct hp from enemy and user
+        //  if userObj.hp > 0
+        // your hp goes down per click
+        // hp of enemy goes down
+
+
     })
 })

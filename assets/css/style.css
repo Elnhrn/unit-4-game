@@ -1,19 +1,11 @@
-/* for the sticky footer */
-html, body {
-    height: 100%;
-}
 footer {
     text-align: center;
-    font-size: 20px;
+    font-size: 25px;
     width: 100%;
     background-color: black;
     color: white;
-    padding: 80px 0 0 0;
-    position: fixed;
-    left: 0;
-    bottom: 0;
+    margin: 80px 0 0 0;
 }
-/* ---------------------- */
 
 .container {
     max-width: 1024px;
