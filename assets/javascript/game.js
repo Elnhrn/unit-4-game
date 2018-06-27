@@ -96,6 +96,8 @@ $(document).ready(function () {
         var userObj = characters[user];
         var enemyObj = characters[enemy];
 
+        console.log(userObj[1]);
+
         if (userObj.hp > 0) {
             enemyObj = enemyObj.hp - userObj.damage * turnCounter;
             userObj = userObj.hp - enemyObj.damage;
