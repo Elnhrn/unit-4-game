@@ -19,7 +19,7 @@ $(document).ready(function () {
         },
         "vader": {
             name: "Darth Vader",
-            power: 180,
+            hp: 180,
             damage: 25,
         }
     }
@@ -27,28 +27,59 @@ $(document).ready(function () {
     var enemyChosen = false;
     var user;
     var enemy;
-    var turnCounter = 0;
+    var turnCounter = 1;
     var killCount = 0;
+    var userObj;
+    var enemyObj;
 
-    // "You attacked ENEMY for # damage"
-    // "ENEMY attacked you back # damage"
-    // as you keep clicking your attack damage increments 
-    // when your hp is negative, you lose
-    // "You have been defeated. GAME OVER!"
-    // restart button after you lose
-    // when you reduce your defender's hp to negative, "You have defeated ENEMY, you can choose to fight another enemy."
-    // when you click on attack after you kill one enemy, "No enemy here."
     // click on remaining enemies, move down to defender div
     // click attack, your attack damage remembers from last enemy and continues to increase by increments
     // "You won! GAME OVER!"
+
+    // functions
+
+    // attack enemy, deduct hp from enemy and user
+    // as you keep clicking your attack damage increments 
+    var attack = function () {
+        enemyObj.hp = enemyObj.hp - (userObj.damage * turnCounter);
+        userObj.hp = userObj.hp - enemyObj.damage;
+        $("footer").html("<div>" + userObj.name + " attacked " + enemyObj.name + " for <span style='color:red;'>" + userObj.damage * turnCounter + "</span> damage!</div>");
+        $("footer").append(enemyObj.name + " attacked " + userObj.name + " back for <span style='color:red;'>" + enemyObj.damage + "</span> damage!</div>");
+        $(".box-1 .hp").text(userObj.hp);
+        $(".box-2 .hp").text(enemyObj.hp);
+        turnCounter++;
+    }
+
+    // when your hp is negative, you lose
+    var youLose = function () {
+        if (userObj.hp < 0) {
+            $("footer").html("You lose. " + enemyObj.name + " has defeated you.");
+            $(".box-3").html("<img id='restart' src='assets/images/loserestart.png'>");
+        }
+    }
+
+    var youWon = function () {
+        if (enemyObj.hp < 0) {
+            if (killCount < 2) {
+                $("footer").html("You defeated " + enemyObj.name + "!<br> Choose your next battle.<br> May the force be with you.");
+                killCount++;
+                enemyChosen = false;
+                $("#attack").remove();
+                $("<div class='choose-battle'>Choose your next battle</div>").appendTo($(".box-3"));
+                //$(".box-3").off("click").css("pointer-events", "none");
+            } else {
+                $("footer").html("You won!<br>The force is strong in you.");
+                $(".box-3").html("<img id='restart' src='assets/images/winrestart.png'>");
+            }
+        }
+    }
 
     // on click functions
 
     $(".character").on("click", function () {
 
-        // TO DO: turn this into a function?      
         // pick 1 character
-        if (characterChosen == false && enemyChosen == false && turnCounter == 0) {
+        if (characterChosen == false && enemyChosen == false) {
             $(".choose-character").replaceWith($(this));
             $(this).children().last().css("background-color", "green");
 
@@ -71,8 +102,8 @@ $(document).ready(function () {
             return;
         }
 
-        // pick villain
-        if (characterChosen == true && enemyChosen == false && turnCounter == 0) {
+        // pick villain first round
+        if (characterChosen == true && enemyChosen == false && killCount == 0) {
             $(".choose-battle").replaceWith($(this));
             $(this).children().last().css("background", "red");
 
@@ -83,9 +114,27 @@ $(document).ready(function () {
                 $(".box-3").children().appendTo($(".box-4"));
             }
 
+            enemyChosen = true;
             $(".box-3").append("<img id='attack' src='assets/images/attack.png'>");
         }
-        enemyChosen = true;
+
+        // pick villain second round
+        if (characterChosen == true && enemyChosen == false && killCount == 1) {
+            $(".box-2").html($(this));
+            $(this).children().last().css("background", "red");
+            enemyChosen = true;
+            $("footer").empty();
+            $(".box-3").html("<img id='attack' src='assets/images/attack.png'>");
+        }
+
+        // pick villain third round
+        if (characterChosen == true && enemyChosen == false && killCount == 2) {
+            $(".box-2").html($(this));
+            $(this).children().last().css("background", "red");
+            enemyChosen = true;
+            $("footer").empty();
+            $(".box-3").html("<img id='attack' src='assets/images/attack.png'>");
+        }
     })
 
     // fight by clicking on attack button
@@ -93,26 +142,29 @@ $(document).ready(function () {
         user = $(".box-1").children("div").eq(0).attr("id");
         enemy = $(".box-2").children("div").eq(0).attr("id");
         // access objects of obj array with [int]
-        var userObj = characters[user];
-        var enemyObj = characters[enemy];
+        userObj = characters[user];
+        enemyObj = characters[enemy];
 
-        console.log(userObj[1]);
-
-        if (userObj.hp > 0) {
-            enemyObj = enemyObj.hp - userObj.damage * turnCounter;
-            userObj = userObj.hp - enemyObj.damage;
-            $("footer").html("<div>You attacked " + userObj.name + " for " + enemyObj.hp + " damage!</div>");
-        } else {
-
+        // first round
+        if (killCount == 0) {
+            attack();
+            youLose();
+            youWon();
+        // second round
+        } else if (killCount == 1) {
+            attack();
+            youLose();
+            youWon();
+        // third round
+        } else if (killCount == 2) {
+            attack();
+            youLose();
+            youWon();
         }
+    })
 
-        turnCounter++;
-
-        // attack enemy, deduct hp from enemy and user
-        //  if userObj.hp > 0
-        // your hp goes down per click
-        // hp of enemy goes down
-
-
+    // restart button after you lose
+    $(".box-3").on("click", "#restart", function () {
+        location.reload();
     })
 })
