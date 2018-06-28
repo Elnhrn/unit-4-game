@@ -32,10 +32,6 @@ $(document).ready(function () {
     var userObj;
     var enemyObj;
 
-    // click on remaining enemies, move down to defender div
-    // click attack, your attack damage remembers from last enemy and continues to increase by increments
-    // "You won! GAME OVER!"
-
     // functions
 
     // attack enemy, deduct hp from enemy and user
@@ -52,14 +48,18 @@ $(document).ready(function () {
 
     // when your hp is negative, you lose
     var youLose = function () {
-        if (userObj.hp < 0) {
+        if (userObj.hp < 1 && enemyObj.hp > 0) {
             $("footer").html("You lose. " + enemyObj.name + " has defeated you.");
+            $(".box-3").html("<img id='restart' src='assets/images/loserestart.png'>");
+        } else if (enemyObj.hp < 1 && userObj.hp < 1) {
+            $("footer").html("You both died.");
             $(".box-3").html("<img id='restart' src='assets/images/loserestart.png'>");
         }
     }
 
+    // "You won! GAME OVER!"
     var youWon = function () {
-        if (enemyObj.hp < 0) {
+        if (enemyObj.hp < 1 && userObj.hp > 0) {
             if (killCount < 2) {
                 $("footer").html("You defeated " + enemyObj.name + "!<br> Choose your next battle.<br> May the force be with you.");
                 killCount++;
@@ -71,6 +71,9 @@ $(document).ready(function () {
                 $("footer").html("You won!<br>The force is strong in you.");
                 $(".box-3").html("<img id='restart' src='assets/images/winrestart.png'>");
             }
+        } else if (enemyObj.hp < 1 && userObj.hp < 1) {
+            $("footer").html("You both died.");
+            $(".box-3").html("<img id='restart' src='assets/images/loserestart.png'>");
         }
     }
 
@@ -138,6 +141,7 @@ $(document).ready(function () {
     })
 
     // fight by clicking on attack button
+    // click attack, your attack damage remembers from last enemy and continues to increase by increments
     $(".box-3").on("click", "#attack", function () {
         user = $(".box-1").children("div").eq(0).attr("id");
         enemy = $(".box-2").children("div").eq(0).attr("id");
@@ -150,12 +154,12 @@ $(document).ready(function () {
             attack();
             youLose();
             youWon();
-        // second round
+            // second round
         } else if (killCount == 1) {
             attack();
             youLose();
             youWon();
-        // third round
+            // third round
         } else if (killCount == 2) {
             attack();
             youLose();
